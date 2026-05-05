@@ -1,0 +1,14 @@
+syntax = "proto3";
+package fleet;
+option go_package = "./pb";
+
+service SyncService {
+  // Manually trigger a sync or check current status
+  rpc TriggerSync(SyncRequest) returns (SyncResponse);
+  rpc GetSyncStatus(StatusRequest) returns (StatusResponse);
+}
+
+message SyncRequest { string type_name = 1; } // e.g. "DutyStatusLog"
+message SyncResponse { string message = 1; bool success = 2; }
+message StatusRequest {}
+message StatusResponse { string last_sync_token = 1; int32 records_processed = 2; }
